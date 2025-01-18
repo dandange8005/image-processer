@@ -1,0 +1,22 @@
+{
+    "name": "image-processor",
+    "version": "1.0.0",
+    "main": "main.js",
+    "scripts": {
+      "start": "electron .",
+      "build": "electron-builder"
+    },
+    "dependencies": {
+      "sharp": "^0.33.2"
+    },
+    "devDependencies": {
+      "electron": "^28.1.0",
+      "electron-builder": "^24.9.1"
+    },
+    "build": {
+      "appId": "com.imageprocessor.app",
+      "mac": {
+        "category": "public.app-category.graphics-design"
+      }
+    }
+  }
