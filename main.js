@@ -1,4 +1,3 @@
-// main.js
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const sharp = require('sharp')
@@ -36,11 +35,13 @@ app.on('activate', () => {
 // Handle image processing
 ipcMain.handle('process-image', async (event, options) => {
   try {
-    const { filePath, width, height, format, quality } = options
+    const { filePath, width, height, format, quality, cropTo16_9, cropPosition, outputFilename } = options;
+    
+    // Determine output path using custom filename if provided
     const outputPath = path.join(
       path.dirname(filePath),
-      `processed-${path.basename(filePath, path.extname(filePath))}.${format}`
-    )
+      outputFilename || `processed-${path.basename(filePath, path.extname(filePath))}.${format}`
+    );
 
     let pipeline = sharp(filePath)
 
@@ -49,11 +50,12 @@ ipcMain.handle('process-image', async (event, options) => {
       const resizeOptions = {
         width: width || null,
         height: height || null,
-        fit: options.cropTo16_9 ? 'cover' : 'inside',
-        withoutEnlargement: true
+        fit: cropTo16_9 ? 'cover' : 'inside',
+        withoutEnlargement: true,
+        position: cropTo16_9 ? cropPosition : 'center'
       }
       
-      if (options.cropTo16_9) {
+      if (cropTo16_9) {
         // Calculate height based on 16:9 ratio if width is provided
         if (width) {
           resizeOptions.height = Math.round(width * (9/16))
