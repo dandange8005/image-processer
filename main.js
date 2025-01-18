@@ -49,11 +49,11 @@ ipcMain.handle('process-image', async (event, options) => {
       const resizeOptions = {
         width: width || null,
         height: height || null,
-        fit: document.getElementById('cropTo16_9').checked ? 'cover' : 'inside',
+        fit: options.cropTo16_9 ? 'cover' : 'inside',
         withoutEnlargement: true
       }
       
-      if (document.getElementById('cropTo16_9').checked) {
+      if (options.cropTo16_9) {
         // Calculate height based on 16:9 ratio if width is provided
         if (width) {
           resizeOptions.height = Math.round(width * (9/16))
