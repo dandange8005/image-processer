@@ -162,6 +162,7 @@
       const height = parseInt(document.getElementById('height').value) || null
       const format = document.getElementById('format').value
       const quality = parseInt(document.getElementById('quality').value)
+      const cropTo16_9 = document.getElementById('cropTo16_9').checked
       const status = document.getElementById('status')
 
       if (!fileInput.files.length) {
@@ -179,7 +180,8 @@
           width,
           height,
           format,
-          quality
+          quality,
+          cropTo16_9
         })
 
         if (result.success) {
